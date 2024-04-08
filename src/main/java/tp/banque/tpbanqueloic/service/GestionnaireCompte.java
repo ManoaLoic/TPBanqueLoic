@@ -1,6 +1,7 @@
 package tp.banque.tpbanqueloic.service;
 
 import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -28,7 +29,7 @@ import tp.banque.tpbanqueloic.entity.CompteBancaire;
             "driverClass=com.mysql.cj.jdbc.Driver"
         }
 )
-@RequestScoped
+@Dependent
 public class GestionnaireCompte {
 
     @PersistenceContext(unitName = "banquePU")
