@@ -19,12 +19,16 @@ import tp.banque.tpbanqueloic.service.GestionnaireCompte;
 @Named(value = "listeComptes")
 @ViewScoped
 public class ListeComptes implements Serializable {
-
+    private List<CompteBancaire> compteList;
+    
     @Inject
     private GestionnaireCompte gestionnaireCompte;
     
     public List<CompteBancaire> getAllComptes(){
-        return gestionnaireCompte.getAllComptes();
+        if(compteList == null){
+            compteList = gestionnaireCompte.getAllComptes();
+        }
+        return compteList;
     }
     
 }
