@@ -34,6 +34,18 @@ public class GestionnaireCompte {
     private EntityManager em;
 
     @Transactional
+    public void deposer(CompteBancaire c, int montant) {
+        c.deposer(montant);
+        update(c);
+    }
+    
+    @Transactional
+    public void retirer(CompteBancaire c, int montant) {
+        c.retirer(montant);
+        update(c);
+    }
+    
+    @Transactional
     public void transferer(CompteBancaire source, CompteBancaire destination,
             int montant) {
         source.retirer(montant);
