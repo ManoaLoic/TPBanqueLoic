@@ -34,13 +34,27 @@ public class GestionnaireCompte {
     private EntityManager em;
 
     @Transactional
+    public void transferer(CompteBancaire source, CompteBancaire destination,
+            int montant) {
+        source.retirer(montant);
+        destination.deposer(montant);
+        update(source);
+        update(destination);
+    }
+
+    @Transactional
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return em.merge(compteBancaire);
+    }
+
+    @Transactional
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
 
-//    public CompteBancaire findById(int idCompte) {
-//        return em.find(CompteBancaire.class, idCompte);
-//    }
+    public CompteBancaire findById(long idCompte) {
+        return em.find(CompteBancaire.class, idCompte);
+    }
     public List<CompteBancaire> getAllComptes() {
         String s = "select c from CompteBancaire as c";
         TypedQuery<CompteBancaire> query
@@ -48,8 +62,4 @@ public class GestionnaireCompte {
         return query.getResultList();
     }
 
-//    @Transactional
-//    public CompteBancaire update(CompteBancaire compte) {
-//        return em.merge(compte);
-//    }
 }
