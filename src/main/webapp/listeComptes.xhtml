@@ -15,6 +15,7 @@
             </ui:define>
 
             <ui:define name="content">
+                <h:messages id="flashMessages" globalOnly="true" />
                 <h:form>
                     <p:dataTable value="#{listeComptes.allComptes}" var="item"
                                  tableStyle="width:auto" 

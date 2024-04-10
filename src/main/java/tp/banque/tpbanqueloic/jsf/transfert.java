@@ -8,6 +8,7 @@ import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import tp.banque.tpbanqueloic.entity.CompteBancaire;
+import tp.banque.tpbanqueloic.jsf.util.Util;
 import tp.banque.tpbanqueloic.service.GestionnaireCompte;
 
 /**
@@ -21,7 +22,7 @@ public class transfert {
     Long idSource;
     Long idDestination;
     Integer montant;
-    
+
     @Inject
     private GestionnaireCompte gestionnaireCompte;
 
@@ -48,12 +49,38 @@ public class transfert {
     public void setMontant(Integer montant) {
         this.montant = montant;
     }
-    
-    public String doTransfert(){
+
+    public String doTransfert() {
+        boolean erreur = false;
+
         CompteBancaire source = gestionnaireCompte.findById(idSource);
         CompteBancaire destination = gestionnaireCompte.findById(idDestination);
+
+        if (source == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
+            erreur = true;
+        } else {
+            if (source.getSolde() < montant) {
+                erreur = true;
+            }
+        }
+        
+        if (destination == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
+            erreur = true;
+        } else {
+            if (destination.getSolde() < montant) {
+                erreur = true;
+            }
+        }
+
+        if (erreur) {
+            return null;
+        }
+
         gestionnaireCompte.transferer(source, destination, montant);
+        Util.addFlashInfoMessage("Transfert correctement effectué depuis " + source.getNom() + " à " + destination.getNom() + " pour le montant " + montant);
         return "listeComptes?faces-redirect=true";
     }
-    
+
 }
