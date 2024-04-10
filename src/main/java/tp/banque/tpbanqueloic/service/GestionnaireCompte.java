@@ -61,5 +61,8 @@ public class GestionnaireCompte {
                 = em.createQuery(s, CompteBancaire.class);
         return query.getResultList();
     }
-
+    @Transactional
+    public void supprimerCompte(CompteBancaire compte) {
+        em.remove(em.merge(compte));
+    }
 }
