@@ -54,6 +54,8 @@
                                            title="Supprimer le compte de #{item.nom}" >
                                 <h:graphicImage name="images/del.png" />
                             </h:commandLink>
+                            <h:link outcome="renommer?id=#{item.id}" 
+                                    value="Renommer"/>
                         </p:column>
                     </p:dataTable>
 
