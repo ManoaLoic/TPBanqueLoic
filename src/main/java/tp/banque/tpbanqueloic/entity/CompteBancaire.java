@@ -4,11 +4,16 @@
  */
 package tp.banque.tpbanqueloic.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -26,16 +31,25 @@ public class CompteBancaire implements Serializable {
 
     private Integer solde;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OperationBancaire> operations = new ArrayList<>();
+
+    public List<OperationBancaire> getOperations() {
+        return operations;
+    }
+
     public CompteBancaire() {
     }
 
     public CompteBancaire(String nom, int solde) {
         this.nom = nom;
         this.solde = solde;
+        operations.add(new OperationBancaire("Création du compte", solde));
     }
 
     public void deposer(int montant) {
         solde += montant;
+        operations.add(new OperationBancaire("Débit", solde));
     }
 
     public void retirer(int montant) {
@@ -44,6 +58,7 @@ public class CompteBancaire implements Serializable {
         } else {
             solde = 0;
         }
+        operations.add(new OperationBancaire("Crédit", solde));
     }
 
     public Long getId() {
