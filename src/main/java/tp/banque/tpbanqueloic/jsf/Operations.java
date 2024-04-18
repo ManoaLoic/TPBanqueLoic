@@ -46,4 +46,7 @@ public class Operations {
         return compte;
     }
 
+    public void setCompte(CompteBancaire compte) {
+        this.compte = compte;
+    }    
 }
