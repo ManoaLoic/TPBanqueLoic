@@ -61,6 +61,7 @@ public class transfert {
             erreur = true;
         } else {
             if (source.getSolde() < montant) {
+                Util.messageErreur("Solde insuffisant", "Solde insuffisant", "form:source");
                 erreur = true;
             }
         }
@@ -68,10 +69,6 @@ public class transfert {
         if (destination == null) {
             Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
             erreur = true;
-        } else {
-            if (destination.getSolde() < montant) {
-                erreur = true;
-            }
         }
 
         if (erreur) {

@@ -11,6 +11,7 @@ import java.util.Locale;
 /**
  *
  * @author Manoa Loic
+ * ColumnFilter est une classe pour les filterFunction
  */
 @Named(value = "columnFilter")
 @ApplicationScoped
